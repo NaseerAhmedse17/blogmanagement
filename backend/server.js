@@ -15,16 +15,19 @@ const app = express();
 connectDB();
 
 // ── Middleware ──────────────────────────────────────────────
-// Allow any localhost origin in development so the port doesn't matter
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow requests with no origin (curl, Postman, server-to-server)
-    // and any localhost / 127.0.0.1 origin
-    if (!origin || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+    // Allow: no origin (Postman/curl), localhost (dev), configured CLIENT_URL,
+    // and any *.vercel.app or *.netlify.app deployment URL
+    if (
+      !origin ||
+      /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin) ||
+      /\.vercel\.app$/.test(origin) ||
+      /\.netlify\.app$/.test(origin) ||
+      origin === (process.env.CLIENT_URL || '')
+    ) {
       return callback(null, true);
     }
-    const allowed = process.env.CLIENT_URL || 'http://localhost:3000';
-    if (origin === allowed) return callback(null, true);
     callback(new Error(`CORS: origin ${origin} not allowed`));
   },
   credentials: true,
