@@ -1,0 +1,27 @@
+Netlify backend (Express + Functions) — how to deploy this folder
+================================================================
+
+IMPORTANT — “Deploy by uploading a folder” in the Netlify UI
+-------------------------------------------------------------
+That option only uploads STATIC files (HTML/CSS/JS). It does NOT run
+`netlify.toml`, does NOT bundle Netlify Functions, and your API will
+NOT work. You cannot host this Express API with drag-and-drop alone.
+
+Use ONE of these instead:
+
+A) Netlify CLI (from this `backend` folder) — recommended for manual deploys
+   1. npm install
+   2. npx netlify login
+   3. npx netlify link     (connect to site blogmsbackend, or create new)
+   4. npm run deploy:netlify
+   5. In Netlify: Site settings → Environment variables → add MONGO_URI,
+      JWT_SECRET, JWT_REFRESH_SECRET, JWT_*, NODE_ENV=production, CLIENT_URL
+
+B) Git — connect the repo with Base directory = `backend`
+   Netlify will run the build and deploy functions automatically.
+
+After deploy, test:
+   https://YOUR-SITE.netlify.app/api/health
+   https://YOUR-SITE.netlify.app/  (static landing page in public/)
+
+Local API (non-serverless): npm start

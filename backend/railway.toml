@@ -1,0 +1,10 @@
+# Use when Service → Settings → Root Directory = `backend`.
+# Prefer Dockerfile so the image always includes Node (avoids "npm: not found").
+# Clear any "Custom Build Command" in the dashboard for this service.
+
+[build]
+builder = "DOCKERFILE"
+
+[deploy]
+healthcheckPath = "/api/health"
+restartPolicyType = "ON_FAILURE"

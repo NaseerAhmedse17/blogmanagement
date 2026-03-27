@@ -1,0 +1,10 @@
+# Build the API from the root Dockerfile (monorepo: backend lives in ./backend).
+# Clear "Custom Build Command" in Railway — a bare `npm install` runs without Node and causes "npm: not found".
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+healthcheckPath = "/api/health"
+restartPolicyType = "ON_FAILURE"

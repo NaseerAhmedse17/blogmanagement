@@ -1,0 +1,23 @@
+# Base directory on Netlify (Git): set to `backend` so this file is at the site root.
+# Drag-and-drop folder upload does NOT deploy Functions — use CLI or Git. See DEPLOY_NETLIFY.txt
+
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+  # Netlify runs `npm install` then `npm run build` (see package.json) automatically.
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# `/` serves `public/index.html`; `/api/*` is handled by the serverless function.
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true
+
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["mongoose"]
+

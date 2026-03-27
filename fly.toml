@@ -1,0 +1,23 @@
+# Fly.io — deploy from repo root (uses ./Dockerfile which builds ./backend).
+# First time: `fly launch` (creates the app if needed) then `fly deploy`.
+# If `app` name is taken globally, pick another: `fly apps create my-unique-name` and set `app` below.
+
+app = "blog-management-api"
+primary_region = "iad"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+
+[[http_service.checks]]
+  grace_period = "10s"
+  interval = "30s"
+  method = "GET"
+  timeout = "5s"
+  path = "/api/health"

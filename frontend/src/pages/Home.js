@@ -7,7 +7,7 @@ const Home = () => {
   const { isAuthenticated } = useAuth();
 
   return (
-    <div>
+    <div className="home-page">
       {/* Hero */}
       <div className="hero">
         <div className="hero-inner">

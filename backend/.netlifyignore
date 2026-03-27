@@ -1,0 +1,6 @@
+# Keep uploads/builds smaller; Netlify installs from package.json on build.
+node_modules
+.env
+.env.*
+*.log
+.DS_Store
